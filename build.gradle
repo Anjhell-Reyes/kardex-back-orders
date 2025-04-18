@@ -18,9 +18,62 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// Spring Boot Starters
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Database
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+	//runtimeOnly 'com.h2database:h2'  // Descomentar si usas H2 para testing local
+
+	// Jackson (JSON serialization/deserialization)
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	// Jakarta Validation (Bean Validation API)
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+	runtimeOnly 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
+
+	// MapStruct (Mapping DTOs and entities)
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	// Swagger/OpenAPI for API documentation
+	implementation 'io.swagger.core.v3:swagger-core:2.2.22'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+	// JAXB (XML Binding)
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+	// feign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	//JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+	//javaMail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Jackson para manejar JSON (DTOs de PayPal)
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	// Spring Boot config processor (opcional si usas configuración con @ConfigurationProperties)
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	// Logging (ya viene con Spring Boot Starter, pero asegúrate de tenerlo para depurar)
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2024.0.0"
+	}
 }
 
 tasks.named('test') {
