@@ -9,6 +9,7 @@ import com.kardex.domain.model.*;
 import com.kardex.domain.spi.*;
 import com.kardex.domain.utils.Constants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public void saveOrder(Long cartId) {
+    public void saveOrder(Long cartId, File archivo) {
         // Obtener el carrito con productos completos
         Cart cart = cartServicePort.getCart(cartId);
 
@@ -87,7 +88,7 @@ public class OrderUseCase implements IOrderServicePort {
             emailRequest.setItems(items);
 
             // Enviar el correo al proveedor y al usuario
-            emailServicePort.sendEmailToProvider(emailRequest);
+            emailServicePort.sendEmailToProvider(emailRequest, archivo);
         });
 
         // Obtener los productos para el cliente
@@ -95,7 +96,7 @@ public class OrderUseCase implements IOrderServicePort {
                 .map(item -> item.getProduct().getName())
                 .toList();
 
-        emailServicePort.sendEmailtoUser(order.getCustomerEmail(), productNames);
+        emailServicePort.sendEmailtoUser(order.getCustomerEmail(), productNames, archivo);
     }
 
     @Override
@@ -208,6 +209,7 @@ public class OrderUseCase implements IOrderServicePort {
         order.setNumberOrder(oldOrder.getNumberOrder());
         order.setTokenOrder(oldOrder.getTokenOrder());
         order.setCreatedAt(oldOrder.getCreatedAt());
+        order.setTotalAmount(oldOrder.getTotalAmount());
 
         // Solo permitimos cambio de estado
         order.setStatus(copyIfNull(

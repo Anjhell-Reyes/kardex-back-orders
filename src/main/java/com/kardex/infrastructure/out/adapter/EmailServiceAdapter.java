@@ -10,6 +10,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class EmailServiceAdapter implements IEmailPersistencePort {
     private final JavaMailSender mailSender;
 
     @Override
-    public void sendEmail(String to, String content, boolean isProvider)  {
+    public void sendEmail(String to, String content, boolean isProvider, File archivo)  {
         try{
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -32,6 +34,12 @@ public class EmailServiceAdapter implements IEmailPersistencePort {
             }
 
             helper.setText(content, true); // Activa HTML
+
+            // 📎 Adjunta el archivo si existe
+            if (archivo != null && archivo.exists()) {
+                helper.addAttachment("Factura.pdf", archivo);
+            }
+
             mailSender.send(message);
         }catch (MessagingException e){
             throw new EmailSendingException();

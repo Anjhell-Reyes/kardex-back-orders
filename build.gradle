@@ -68,6 +68,9 @@ dependencies {
 
 	// Logging (ya viene con Spring Boot Starter, pero asegúrate de tenerlo para depurar)
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+	// Generar pdf
+	implementation 'com.itextpdf:itext7-core:7.2.5'
 }
 
 dependencyManagement {

@@ -4,10 +4,11 @@ import com.kardex.domain.model.CustomPage;
 import com.kardex.domain.model.Order;
 import com.kardex.domain.model.OrderStatusHistory;
 
+import java.io.File;
 import java.util.List;
 
 public interface IOrderServicePort {
-    void saveOrder(Long cartId);
+    void saveOrder(Long cartId, File archivo);
 
     Order getOrder(Long orderId, String tokenOrder);
 

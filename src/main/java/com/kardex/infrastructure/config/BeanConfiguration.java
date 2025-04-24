@@ -49,6 +49,11 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public IComprobanteGeneratorPersistencePort comprobanteGeneratorPersistencePort(){
+        return new ComprobanteGeneratorService();
+    }
+
+    @Bean
     public IPaypalClientPersistencePort paypalClientPersistencePort(){
         return new PayPalClient(restTemplateBuilder.build(), objectMapper);
     }

@@ -1,9 +1,8 @@
 package com.kardex.application.dto.paypalDto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-
-import java.util.Map;
 
 @Getter
 public class PayPalWebhookEvent {
@@ -19,22 +18,36 @@ public class PayPalWebhookEvent {
     @Getter
     public static class Resource {
 
+        @JsonProperty("id")
+        private String transactionId;
+
         @JsonProperty("custom_id")
         private String customId;
 
         @JsonProperty("status")
         private String status;
 
-        @JsonProperty("purchase_units")
-        private PurchaseUnit[] purchaseUnits;
+        @JsonProperty("create_time")
+        private String createTime;
+
+        private Amount amount;
+
+        private Payee payee;
     }
 
     @Getter
-    public static class PurchaseUnit {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Amount {
+        @JsonProperty("currency_code")
+        private String currencyCode;
 
-        @JsonProperty("reference_id")
-        private String referenceId;
+        private String value;
+    }
 
-        private Map<String, Object> amount;
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Payee {
+        @JsonProperty("email_address")
+        private String email;
     }
 }
